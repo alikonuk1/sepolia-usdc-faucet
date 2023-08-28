@@ -1,19 +1,29 @@
 {
   "private": true,
   "dependencies": {
+    "@chakra-ui/react": "^2.6.0",
+    "@emotion/react": "^11.10.8",
+    "@emotion/styled": "^11.10.8",
+    "@rainbow-me/rainbowkit": "^0.12.12",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "ethers": "^5.7.2",
+    "framer-motion": "^10.12.5",
+    "prettier": "^2.8.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.8.0",
     "react-scripts": "5.0.1",
+    "wagmi": "^0.12.12",
     "web-vitals": "^3.0.4"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write \"./**/*.{js,ts,md,json,sol}\""
   },
   "eslintConfig": {
     "extends": [
