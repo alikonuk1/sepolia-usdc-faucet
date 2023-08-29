@@ -1,10 +1,6 @@
-import React from 'react';
-import {
-  VStack,
-  Heading,
-  Divider,
-} from '@chakra-ui/react';
-import Mint from './Mint';
+import React from "react";
+import { VStack, Heading, Divider } from "@chakra-ui/react";
+import Mint from "./Mint";
 
 const Hero = () => {
   return (
@@ -17,11 +13,10 @@ const Hero = () => {
       w="100%"
     >
       <Heading>Sepolia USDC Faucet</Heading>
-      <Mint/>
+      <Mint />
       <Divider />
     </VStack>
   );
 };
 
 export default Hero;
-
