@@ -62,9 +62,9 @@ const Mint = () => {
     }
   }, [ethAmount]);
 
-  useEffect(() =>{
+  useEffect(() => {
     setUser(address);
-  })
+  });
 
   let ethPrice_;
   if (ethPrice !== null) {
