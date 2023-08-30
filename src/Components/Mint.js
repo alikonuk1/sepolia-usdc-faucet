@@ -35,7 +35,7 @@ const Mint = () => {
         .then((response) => response.json())
         .then((data) => {
           if (data.count > 0) {
-            const hashKey =
+            const hashKey = 
               "0x4385954e058fbe6b6a744f32a4f89d67aad099f8fb8b23e7ea8dd366ae88151d";
             const beaconData = data.data[hashKey];
 
