@@ -1,4 +1,4 @@
-import { Link, Flex } from "@chakra-ui/react";
+import { Link, Flex, Heading } from "@chakra-ui/react";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Header = () => {

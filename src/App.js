@@ -28,7 +28,6 @@ function App() {
         <Flex alignItems="center" justifyContent="center" width="100%">
           <Hero />
         </Flex>
-        {/*         <Footer/> */}
       </div>
     </ChakraProvider>
   );

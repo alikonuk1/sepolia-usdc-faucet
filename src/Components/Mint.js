@@ -8,21 +8,13 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
-import {
-  useAccount,
-  useContractWrite,
-  usePrepareContractWrite,
-  useWaitForTransaction,
-} from "wagmi";
 import { ABI, CONTRACT_ADDRESS } from "../data/abi";
 import { FaCircleNotch, FaSyncAlt } from "react-icons/fa";
-import { parseEther } from "ethers/lib/utils.js";
 
 const provider = new ethers.providers.Web3Provider(window.ethereum);
 const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
 
 const Mint = () => {
-  const { address } = useAccount();
   const [ethAmount, setEthAmount] = useState("");
   const [ethPrice, setEthPrice] = useState(null);
   const [timestamp, setTimestamp] = useState(null);
