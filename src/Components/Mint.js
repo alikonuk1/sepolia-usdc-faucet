@@ -8,9 +8,18 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { ethers } from "ethers";
-import { useAccount, useContractWrite, useWaitForTransaction } from "wagmi";
+import {
+  useAccount,
+  useContractWrite,
+  usePrepareContractWrite,
+  useWaitForTransaction,
+} from "wagmi";
 import { ABI, CONTRACT_ADDRESS } from "../data/abi";
 import { FaCircleNotch, FaSyncAlt } from "react-icons/fa";
+import { parseEther } from "ethers/lib/utils.js";
+
+const provider = new ethers.providers.Web3Provider(window.ethereum);
+const contract = new ethers.Contract(CONTRACT_ADDRESS, ABI, provider);
 
 const Mint = () => {
   const { address } = useAccount();
@@ -19,23 +28,17 @@ const Mint = () => {
   const [timestamp, setTimestamp] = useState(null);
   const [data_, setData] = useState("");
   const [signedMessage, setSignedMessage] = useState(null);
-  const [user, setUser] = useState("");
 
-  console.log("Address:", address);
-
-  useEffect(() => {
-    if (!address) {
-      console.log("Ethereum account is not connected");
-    }
-  }, [address]);
+  const signer = provider.getSigner();
 
   useEffect(() => {
+    if (!ethAmount || isNaN(parseFloat(ethAmount))) return;
     if (ethAmount) {
       fetch("https://pool.nodary.io/0xc52EeA00154B4fF1EbbF8Ba39FDe37F1AC3B9Fd4")
         .then((response) => response.json())
         .then((data) => {
           if (data.count > 0) {
-            const hashKey = 
+            const hashKey =
               "0x4385954e058fbe6b6a744f32a4f89d67aad099f8fb8b23e7ea8dd366ae88151d";
             const beaconData = data.data[hashKey];
 
@@ -61,10 +64,6 @@ const Mint = () => {
         });
     }
   }, [ethAmount]);
-
-  useEffect(() => {
-    setUser(address);
-  });
 
   let ethPrice_;
   if (ethPrice !== null) {
@@ -105,31 +104,26 @@ const Mint = () => {
       });
   };
 
-  const { config } = useContractWrite({
-    address: CONTRACT_ADDRESS,
-    abi: ABI,
-    functionName: "mint",
-    args: [
-      user,
-      timestamp ? timestamp.toString() : "0",
-      data_,
-      signedMessage || "0x0",
-    ],
-    value: ethAmount,
-  });
+  const mintTokens = async () => {
+    const contractWithSigner = contract.connect(signer);
 
-  console.log("Contract Write Config:", config);
+    try {
+      const tx = await contractWithSigner.mint(
+        timestamp ? timestamp.toString() : "0",
+        data_,
+        signedMessage || "0x0",
+        {
+          value: ethers.utils.parseEther(ethAmount),
+        }
+      );
 
-  const { data, write } = useContractWrite(config);
-
-  const { isLoading, isSuccess } = useWaitForTransaction({
-    hash: data?.hash,
-  });
-
-  useEffect(() => {
-    console.log("isLoading:", isLoading);
-    console.log("isSuccess:", isSuccess);
-  }, [isLoading, isSuccess]);
+      console.log("Transaction Hash:", tx.hash);
+      await tx.wait();
+      console.log("Transaction Confirmed!");
+    } catch (error) {
+      console.error("Error sending transaction:", error);
+    }
+  };
 
   return (
     <VStack spacing={4} w="100%">
@@ -156,14 +150,10 @@ const Mint = () => {
         borderWidth="1px"
         color="white"
         size="md"
-        disabled={isLoading || !address}
-        onClick={() => {
-          if (address) {
-            write?.();
-          }
-        }}
+        /*         disabled={isLoading || !address} */
+        onClick={mintTokens}
       >
-        {isLoading ? "Minting..." : "Mint"}
+        Mint
       </Button>
     </VStack>
   );

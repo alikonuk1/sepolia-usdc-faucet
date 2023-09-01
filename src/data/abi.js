@@ -1,4 +1,4 @@
-export const CONTRACT_ADDRESS = "0x6590a3A95Ed938708f60aa41C03347aCeCf38aBa";
+export const CONTRACT_ADDRESS = "0x03A35484388562E2b4e3d5ce105dc4Db7F57ebC4";
 export const ABI = [
   { inputs: [], stateMutability: "nonpayable", type: "constructor" },
   { inputs: [], name: "InvalidShortString", type: "error" },
@@ -36,6 +36,25 @@ export const ABI = [
   {
     anonymous: false,
     inputs: [
+      {
+        indexed: true,
+        internalType: "address",
+        name: "previousOwner",
+        type: "address",
+      },
+      {
+        indexed: true,
+        internalType: "address",
+        name: "newOwner",
+        type: "address",
+      },
+    ],
+    name: "OwnershipTransferred",
+    type: "event",
+  },
+  {
+    anonymous: false,
+    inputs: [
       { indexed: true, internalType: "address", name: "from", type: "address" },
       { indexed: true, internalType: "address", name: "to", type: "address" },
       {
@@ -53,13 +72,6 @@ export const ABI = [
     name: "DOMAIN_SEPARATOR",
     outputs: [{ internalType: "bytes32", name: "", type: "bytes32" }],
     stateMutability: "view",
-    type: "function",
-  },
-  {
-    inputs: [{ internalType: "address", name: "_withdrawer", type: "address" }],
-    name: "addWithdrawer",
-    outputs: [],
-    stateMutability: "nonpayable",
     type: "function",
   },
   {
@@ -132,15 +144,7 @@ export const ABI = [
     type: "function",
   },
   {
-    inputs: [{ internalType: "address", name: "", type: "address" }],
-    name: "isWithdrawer",
-    outputs: [{ internalType: "bool", name: "", type: "bool" }],
-    stateMutability: "view",
-    type: "function",
-  },
-  {
     inputs: [
-      { internalType: "address", name: "recipient", type: "address" },
       { internalType: "uint256", name: "timestamp", type: "uint256" },
       { internalType: "bytes", name: "data", type: "bytes" },
       { internalType: "bytes", name: "signature", type: "bytes" },
@@ -165,6 +169,13 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [],
+    name: "owner",
+    outputs: [{ internalType: "address", name: "", type: "address" }],
+    stateMutability: "view",
+    type: "function",
+  },
+  {
     inputs: [
       { internalType: "address", name: "owner", type: "address" },
       { internalType: "address", name: "spender", type: "address" },
@@ -175,6 +186,13 @@ export const ABI = [
       { internalType: "bytes32", name: "s", type: "bytes32" },
     ],
     name: "permit",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
+    inputs: [],
+    name: "renounceOwnership",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
@@ -215,10 +233,18 @@ export const ABI = [
     type: "function",
   },
   {
+    inputs: [{ internalType: "address", name: "newOwner", type: "address" }],
+    name: "transferOwnership",
+    outputs: [],
+    stateMutability: "nonpayable",
+    type: "function",
+  },
+  {
     inputs: [],
     name: "withdraw",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",
   },
+  { stateMutability: "payable", type: "receive" },
 ];
