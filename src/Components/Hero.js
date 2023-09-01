@@ -1,5 +1,5 @@
 import React from "react";
-import { VStack, Heading, Divider } from "@chakra-ui/react";
+import { VStack, Heading, Divider, Text } from "@chakra-ui/react";
 import Mint from "./Mint";
 
 const Hero = () => {
@@ -15,6 +15,9 @@ const Hero = () => {
       <Heading>Sepolia USDC Faucet</Heading>
       <Mint />
       <Divider />
+      <Text>
+        Please note: All transactions are final. Ensure you convert only the amount you need, as used ETH is non-returnable.
+      </Text>
     </VStack>
   );
 };
